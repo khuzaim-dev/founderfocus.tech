@@ -6,8 +6,7 @@ import { SectionHead } from '@/components/shared/SectionHead'
 import { TweetCarousel } from '@/components/twitter/TweetCarousel'
 import { extractTweetId } from '@/lib/wordpress'
 
-// Dynamically import Tweet as a Client Component with no SSR to bypass Twitter blocks on Vercel IPs
-const Tweet = dynamic(() => import('react-tweet').then((mod) => mod.Tweet), { ssr: false })
+import { ClientTweet } from '@/components/twitter/ClientTweet'
 
 function TweetFallback() {
   return (
@@ -74,7 +73,7 @@ export function ThreadsSection({ posts }: ThreadsSectionProps) {
           <div key={`${id}-${index}`} className="ff-tweet-card ff-tweet-slide">
             <div data-theme="light">
               <Suspense fallback={<TweetFallback />}>
-                <Tweet id={id} />
+                <ClientTweet id={id} />
               </Suspense>
             </div>
           </div>

@@ -6,7 +6,7 @@ import { SectionHead } from '@/components/shared/SectionHead'
 import { getTweetPosts } from '@/services/tweets'
 import { extractTweetId } from '@/lib/wordpress'
 
-const Tweet = dynamic(() => import('react-tweet').then((mod) => mod.Tweet), { ssr: false })
+import { ClientTweet } from '@/components/twitter/ClientTweet'
 
 function TweetFallback() {
   return (
@@ -66,7 +66,7 @@ export default async function ThreadsPage() {
             <div key={`${id}-${index}`} className="ff-tweet-card">
               <div data-theme="light">
                 <Suspense fallback={<TweetFallback />}>
-                  <Tweet id={id} />
+                  <ClientTweet id={id} />
                 </Suspense>
               </div>
             </div>
