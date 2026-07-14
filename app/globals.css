@@ -1,26 +1,710 @@
+/* ─── Google Fonts (must be first) ─────────────────────────────────────────── */
+@import url('https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Geist+Mono:ital,wght@0,100..900;1,100..900&family=Manrope:wght@400;500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Geist+Mono:ital,wght@0,100..900;1,100..900&display=swap');
 @import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+@custom-variant dark (&:is(.dark *));
 
+/* ─── Tailwind v4 Theme Tokens ──────────────────────────────────────────────── */
 @theme inline {
+  /* FounderFocus Brand Colors */
+  --color-ink: #161616;
+  --color-muted-ff: #696969;
+  --color-line: #dedede;
+  --color-paper: #fbfbfa;
+  --color-acid: #d7ff3f;
+  --color-blue-ff: #395bff;
+  --color-grid: rgba(22, 22, 22, 0.055);
+
+  /* Font Families */
+  --font-manrope: 'Manrope', Arial, sans-serif;
+  --font-mono: 'DM Mono', monospace;
+  --font-geist: 'Geist Mono', monospace;
+
+  /* shadcn tokens */
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --font-sans: var(--font-sans);
+  --color-sidebar-ring: var(--sidebar-ring);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar: var(--sidebar);
+  --color-chart-5: var(--chart-5);
+  --color-chart-4: var(--chart-4);
+  --color-chart-3: var(--chart-3);
+  --color-chart-2: var(--chart-2);
+  --color-chart-1: var(--chart-1);
+  --color-ring: var(--ring);
+  --color-input: var(--input);
+  --color-border: var(--border);
+  --color-destructive: var(--destructive);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent: var(--accent);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-muted: var(--muted);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-secondary: var(--secondary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary: var(--primary);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-popover: var(--popover);
+  --color-card-foreground: var(--card-foreground);
+  --color-card: var(--card);
+  --radius-sm: calc(var(--radius) * 0.6);
+  --radius-md: calc(var(--radius) * 0.8);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) * 1.4);
+  --radius-2xl: calc(var(--radius) * 1.8);
+  --radius-3xl: calc(var(--radius) * 2.2);
+  --radius-4xl: calc(var(--radius) * 2.6);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+/* ─── CSS Custom Properties (FF Design System) ──────────────────────────────── */
+:root {
+  --ink: #161616;
+  --muted: #696969;
+  --line: #dedede;
+  --paper: #fbfbfa;
+  --acid: #d7ff3f;
+  --blue: #395bff;
+  --grid: rgba(22, 22, 22, .055);
+
+  /* shadcn tokens */
+  --background: oklch(1 0 0);
+  --foreground: oklch(0.145 0 0);
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.145 0 0);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.145 0 0);
+  --primary: oklch(0.205 0 0);
+  --primary-foreground: oklch(0.985 0 0);
+  --secondary: oklch(0.97 0 0);
+  --secondary-foreground: oklch(0.205 0 0);
+  --muted: oklch(0.97 0 0);
+  --muted-foreground: oklch(0.556 0 0);
+  --accent: oklch(0.97 0 0);
+  --accent-foreground: oklch(0.205 0 0);
+  --destructive: oklch(0.577 0.245 27.325);
+  --border: oklch(0.922 0 0);
+  --input: oklch(0.922 0 0);
+  --ring: oklch(0.708 0 0);
+  --radius: 0.625rem;
+  --sidebar: oklch(0.985 0 0);
+  --sidebar-foreground: oklch(0.145 0 0);
+  --sidebar-primary: oklch(0.205 0 0);
+  --sidebar-primary-foreground: oklch(0.985 0 0);
+  --sidebar-accent: oklch(0.97 0 0);
+  --sidebar-accent-foreground: oklch(0.205 0 0);
+  --sidebar-border: oklch(0.922 0 0);
+  --sidebar-ring: oklch(0.708 0 0);
+}
+
+::selection {
+  background-color: #395BFF;
+  color: #fff;
+}
+
+/* ─── Tweet Cards ───────────────────────────────────────────────────────────── */
+
+.ff-tweet-card {
+  height: auto;
+  min-height: 220px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  background: white;
+  border-radius: 12px;
+  border: 1px solid var(--line);
+}
+
+.ff-tweet-slide {
+  flex: 0 0 280px !important;
+  width: 280px !important;
+  max-width: 280px !important;
+  min-width: 280px !important;
+}
+
+/* Force react-tweet wrapper to fill height */
+.ff-tweet-card>div {
+  width: 100%;
+}
+
+/* Style the internal react-tweet container */
+.ff-tweet-card .react-tweet-theme {
+  margin: 0;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Hide extra text with dotted ellipsis */
+.ff-tweet-card .react-tweet-theme p {
+  display: -webkit-box;
+  -webkit-line-clamp: 5;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* ─── Layout Utils ───────────────────────────────────────────────────────────── */
+@layer base {
+  * {
+    box-sizing: border-box;
+    @apply border-border outline-ring/50;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    margin: 0;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: Manrope, Arial, sans-serif;
+    /* FF editorial grid background */
+    background-image:
+      linear-gradient(var(--grid) 1px, transparent 1px),
+      linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+    background-size: 100% 150px, calc((100vw - 80px) / 12) 100%;
+    background-position: 0 38px, 40px 0;
+  }
+
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  button,
+  input {
+    font: inherit;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+/* ─── FF Utility Classes ─────────────────────────────────────────────────────── */
+
+/* Shell/Container */
+.ff-shell {
+  max-width: 1300px;
+  margin: auto;
+  padding: 0 40px;
+}
+
+/* Mono font */
+.ff-mono {
+  font-family: 'DM Mono', 'Geist Mono', monospace;
+}
+
+/* Geist Mono */
+.ff-geist {
+  font-family: 'Geist Mono', 'DM Mono', monospace;
+}
+
+/* ─── Keyframe Animations ─────────────────────────────────────────────────────── */
+
+/* Ticker/tweet marquee */
+@keyframes tweet-tape {
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+/* Ticker horizontal scroll */
+@keyframes ticker-scroll {
+  0% {
+    transform: translateX(0);
+  }
+
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+/* Status panel scan bars */
+@keyframes scan-blink {
+
+  0%,
+  100% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0.15;
+  }
+}
+
+/* Live dot pulse */
+@keyframes live-pulse {
+
+  0%,
+  100% {
+    box-shadow: 0 0 0 3px rgba(215, 255, 63, 0.25);
+  }
+
+  50% {
+    box-shadow: 0 0 0 6px rgba(215, 255, 63, 0.08);
+  }
+}
+
+/* ─── Component Styles ───────────────────────────────────────────────────────── */
+
+/* Navigation Link */
+.ff-navlink {
+  padding: 4px 8px;
+  margin: -4px -8px;
+  border-radius: 2px;
+  transition: all 0.2s ease;
+  color: var(--ink);
+}
+
+.ff-navlink:hover {
+  background-color: var(--ink);
+  color: var(--paper) !important;
+  background-image: repeating-conic-gradient(transparent 0%, transparent 75%, rgba(255, 255, 255, 0.8) 0%, rgba(255, 255, 255, 0.8) 100%);
+  background-position-x: 1px;
+  background-position-y: 0.5px;
+  background-size: 2px 2px;
+}
+
+/* Live indicator dot */
+.ff-dot {
+  width: 7px;
+  height: 7px;
+  background: var(--acid);
+  border-radius: 50%;
+  box-shadow: 0 0 0 3px rgba(215, 255, 63, .25);
+  animation: live-pulse 2s ease-in-out infinite;
+}
+
+/* Subscribe button */
+.ff-subscribe {
+  border: 1px solid var(--ink);
+  padding: 10px 14px;
+  background: var(--ink);
+  color: white;
+  font: 11px 'DM Mono', monospace;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.ff-subscribe:hover {
+  background: #2a2a2a;
+}
+
+/* Section head */
+.ff-section-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  padding-bottom: 15px;
+  border-bottom: 1px solid var(--ink);
+  margin-bottom: 20px;
+}
+
+/* Article grid */
+.ff-article-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 15px;
+}
+
+/* Compact grid */
+.ff-compact-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+}
+
+/* Cards */
+.ff-article-card {
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.78);
+  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.02);
+  min-height: 323px;
+  display: flex;
+  flex-direction: column;
+  transition: background 0.2s, box-shadow 0.2s;
+}
+
+.ff-article-card:hover {
+  background: #fff;
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.07);
+}
+
+.ff-compact-card {
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.7);
+  padding: 14px 18px;
+  display: flex;
+  gap: 13px;
+  align-items: center;
+  transition: background 0.2s, box-shadow 0.2s;
+}
+
+.ff-compact-card:hover {
+  background: #fff;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.05);
+}
+
+
+/* X tweet marquee */
+.ff-x-marquee {
+  overflow: hidden;
+  padding: 5px 0 16px;
+  mask-image: linear-gradient(90deg, transparent, #000 5%, #000 95%, transparent);
+}
+
+.ff-x-track {
+  display: flex;
+  gap: 13px;
+  width: max-content;
+  animation: tweet-tape 36s linear infinite;
+}
+
+.ff-x-marquee:hover .ff-x-track {
+  animation-play-state: paused;
+}
+
+/* Footer brand */
+.ff-footer-brand {
+  font-size: clamp(4rem, 13vw, 12rem);
+  font-weight: 800;
+  letter-spacing: -0.11em;
+  line-height: 0.75;
+  margin-left: -7px;
+}
+
+/* ─── Responsive ─────────────────────────────────────────────────────────────── */
+@media (max-width: 700px) {
+  body {
+    background-size: 100% 120px, 25% 100%;
+  }
+
+  .ff-shell {
+    padding: 0 18px;
+  }
+
+  .ff-article-grid {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .ff-compact-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .ff-footer-brand {
+    font-size: 4.3rem;
+  }
+
+  .ff-x-marquee {
+    margin: 0 -18px;
+    padding-left: 18px;
+  }
+
+  .ff-x-track {
+    animation-duration: 28s;
+  }
+}
+
+@media (max-width: 1000px) {
+  .ff-article-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .ff-compact-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* ─── Reduced Motion ─────────────────────────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  .ff-x-track {
+    animation: none;
+  }
+
+  .ff-dot {
+    animation: none;
+  }
+
+  * {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+
+
+/* ─── Blog Content (Prose) ───────────────────────────────────────────────────── */
+
+.ff-blog-content {
+  font-family: "Geist Mono", "DM Mono", monospace;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 1.8;
+  color: var(--ink);
+  max-width: 720px;
+}
+
+.ff-blog-content p {
+  margin-top: 1.5em;
+  margin-bottom: 1.5em;
+}
+
+.ff-blog-content a {
+  color: var(--blue);
+  text-decoration: underline;
+  text-decoration-color: rgba(0, 85, 255, 0.4);
+  text-underline-offset: 3px;
+  transition: all 0.2s ease;
+}
+
+.ff-blog-content a:hover {
+  text-decoration-color: var(--blue);
+}
+
+.ff-blog-content h1,
+.ff-blog-content h2,
+.ff-blog-content h3,
+.ff-blog-content h4 {
+  font-family: 'Manrope', Arial, sans-serif;
+  font-weight: 700;
+  color: var(--ink);
+  margin-top: 2em;
+  margin-bottom: 0.75em;
+  line-height: 1.3;
+  letter-spacing: -0.02em;
+}
+
+.ff-blog-content h1 {
+  font-size: 28px;
+}
+
+.ff-blog-content h2 {
+  font-size: 24px;
+}
+
+.ff-blog-content h3 {
+  font-size: 20px;
+}
+
+.ff-blog-content h4 {
+  font-size: 18px;
+}
+
+.ff-blog-content ul,
+.ff-blog-content ol {
+  margin-top: 1.5em;
+  margin-bottom: 1.5em;
+  padding-left: 1.5em;
+}
+
+.ff-blog-content li {
+  margin-top: 0.5em;
+  margin-bottom: 0.5em;
+  padding-left: 0.5em;
+}
+
+.ff-blog-content ul>li {
+  list-style-type: disc;
+}
+
+.ff-blog-content ol>li {
+  list-style-type: decimal;
+}
+
+.ff-blog-content blockquote {
+  margin-top: 2em;
+  margin-bottom: 2em;
+  padding-left: 1.25em;
+  border-left: 3px solid var(--blue);
+  color: #555;
+  font-style: italic;
+}
+
+.ff-blog-content code {
+  font-family: "Geist Mono", "DM Mono", monospace;
+  font-size: 0.85em;
+  background-color: rgba(0, 0, 0, 0.05);
+  padding: 0.2em 0.4em;
+  border-radius: 4px;
+  color: #d92149;
+}
+
+.ff-blog-content pre {
+  margin-top: 1.5em;
+  margin-bottom: 1.5em;
+  background-color: var(--ink);
+  color: var(--paper);
+  padding: 1.25em;
+  border-radius: 8px;
+  overflow-x: auto;
+}
+
+.ff-blog-content pre code {
+  background-color: transparent;
+  padding: 0;
+  color: inherit;
+  font-size: 14px;
+}
+
+.ff-blog-content img,
+.ff-blog-content figure {
+  margin-top: 2em;
+  margin-bottom: 2em;
+  border-radius: 8px;
+  max-width: 100%;
+  height: auto;
+}
+
+.ff-blog-content figure figcaption {
+  font-size: 13px;
+  color: var(--muted);
+  text-align: center;
+  margin-top: 0.75em;
+  font-family: "Geist Mono", "DM Mono", monospace;
+}
+
+.ff-blog-content strong,
+.ff-blog-content b {
+  font-weight: 600;
+  color: #111;
+}
+
+.ff-blog-content hr {
+  margin-top: 3em;
+  margin-bottom: 3em;
+  border: 0;
+  border-top: 1px solid var(--line);
+}
+
+/* ─── Responsive Layout Grid ─────────────────────────────────────────────────── */
+
+.ff-layout-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 300px;
+  gap: 40px;
+}
+
+@media (max-width: 1000px) {
+  .ff-layout-grid {
+    grid-template-columns: 1fr;
+    gap: 30px;
+  }
+}
+
+/* ─── Mobile Header and Hamburger Menu ───────────────────────────────────────── */
+
+.ff-hamburger {
+  display: none;
+  background: transparent;
+  border: 0;
+  font-size: 24px;
+  cursor: pointer;
+  color: var(--ink);
+  padding: 4px 8px;
+}
+
+.ff-mobile-menu {
+  display: none;
+}
+
+@media (max-width: 900px) {
+
+  /* Hide standard desktop elements */
+  .navlinks {
+    display: none !important;
+  }
+
+  .ff-subscribe {
+    display: none !important;
+  }
+
+  /* Show hamburger toggle button */
+  .ff-hamburger {
+    display: block;
+  }
+
+  /* Style mobile dropdown menu drawer */
+  .ff-mobile-menu {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    position: absolute;
+    top: 76px;
+    left: 0;
+    width: 100%;
+    background: var(--paper);
+    border-bottom: 1px solid var(--line);
+    padding: 24px;
+    z-index: 1000;
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.05);
+  }
+
+  /* Force vertical list styling for mobile navigation */
+  .mobile-nav {
+    display: flex !important;
+    flex-direction: column;
+    gap: 16px !important;
+    margin-right: 0 !important;
+    font-size: 14px !important;
+  }
+
+  .ff-subscribe-mobile {
+    border: 1px solid var(--ink);
+    padding: 12px;
+    background: var(--ink);
+    color: white;
+    font: 12px 'DM Mono', monospace;
+    cursor: pointer;
+    text-align: center;
+    width: 100%;
+    letter-spacing: 0.04em;
+  }
+
+  .ff-subscribe-mobile:hover {
+    background: #2a2a2a;
+  }
+}
+
+/* ─── Fluid Typography & Article Card Fixes ─────────────────────────────────── */
+
+/* Title on homepage grids */
+.ff-article-card h3 {
+  font-size: clamp(17px, 2vw + 11px, 21px) !important;
+}
+
+/* Section Head Titles */
+.ff-section-head h2 {
+  font-size: clamp(18px, 1.5vw + 12px, 22px) !important;
+}
+
+/* Blog Prose Font Scaling */
+.ff-blog-content {
+  font-size: clamp(15px, 0.2vw + 15px, 17px);
+}
+
+.ff-blog-content h1 {
+  font-size: clamp(22px, 2.5vw + 12px, 28px);
+}
+
+.ff-blog-content h2 {
+  font-size: clamp(19px, 2vw + 10px, 24px);
+}
+
+.ff-blog-content h3 {
+  font-size: clamp(17px, 1.5vw + 8px, 20px);
+}
+
+.ff-blog-content h4 {
+  font-size: clamp(15px, 1vw + 7px, 18px);
 }

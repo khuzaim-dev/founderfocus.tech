@@ -1,65 +1,129 @@
-import Image from "next/image";
+import type { Metadata } from 'next'
+import { Suspense } from 'react'
+import { Shell } from '@/components/layout/Shell'
+import { Hero } from '@/components/home/Hero'
+import { Ticker } from '@/components/home/Ticker'
+import { LatestSignals } from '@/components/home/LatestSignals'
+import { CategorySection } from '@/components/home/CategorySection'
+import { ThreadsSection } from '@/components/home/ThreadsSection'
+import { ToolsSection } from '@/components/home/ToolsSection'
+import { Sidebar } from '@/components/sidebar/Sidebar'
+import {
+  getPosts,
+  getLatestPosts,
+  getPostsByCategory,
+  getTickerPosts,
+} from '@/services/posts'
+import { getTweetPosts } from '@/services/tweets'
+import { getCategories } from '@/lib/wordpress'
+import { buildWebsiteJsonLd } from '@/utils/seo'
 
-export default function Home() {
+// ISR: revalidate every hour
+export const revalidate = 3600
+
+export const metadata: Metadata = {
+  title: 'FounderFocus — Signal for builders',
+  description:
+    'FounderFocus is a live field manual for people building the next software economy. AI, tech, and startup signals—without the ambient noise.',
+  alternates: {
+    canonical: 'https://founderfocus.tech',
+  },
+}
+
+interface HomePageProps {
+  searchParams: Promise<{ page?: string }>
+}
+
+export default async function HomePage({ searchParams }: HomePageProps) {
+  const { page: pageParam } = await searchParams
+  const currentPage = Math.max(1, parseInt(pageParam ?? '1', 10))
+
+  // Parallel data fetching
+  const [
+    { posts, totalPages },
+    tickerPosts,
+    aiPosts,
+    techPosts,
+    startupPosts,
+    tweetPosts,
+    popularPosts,
+    categories,
+  ] = await Promise.all([
+    getPosts(currentPage, 6),
+    getTickerPosts(),
+    getPostsByCategory('ai', 1, 4).then((r) => r.posts).catch(() => []),
+    getPostsByCategory('tech', 1, 4).then((r) => r.posts).catch(() => []),
+    getPostsByCategory('startups', 1, 4).then((r) => r.posts).catch(() => []),
+    getTweetPosts(12).catch(() => []),
+    getLatestPosts(3).catch(() => []),
+    getCategories().catch(() => []),
+  ])
+
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
-        </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
+    <Shell as="main">
+      {/* Hero — date, headline, status panel */}
+      <Hero />
+
+      {/* Live feed ticker */}
+      <Ticker posts={tickerPosts} />
+
+      {/* Main content + sidebar */}
+      <div className="ff-layout-grid" style={{ padding: '60px 0 80px' }}>
+        {/* Main column */}
+        <div>
+          {/* Latest Signals — 6 posts/page */}
+          <LatestSignals
+            posts={posts}
+            currentPage={currentPage}
+            totalPages={totalPages}
+            categories={categories}
+          />
+
+          {/* AI/Tech News */}
+          {aiPosts.length > 0 && (
+            <CategorySection
+              id="ai"
+              title="AI/Tech News"
+              subtitle="MODEL MOVES / RESEARCH / INFRASTRUCTURE"
+              slug="ai"
+              posts={aiPosts}
             />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
+          )}
+
+          {/* Tech */}
+          {techPosts.length > 0 && (
+            <CategorySection
+              id="tech"
+              title="Tech"
+              subtitle="PLATFORMS / INFRASTRUCTURE / TOOLS"
+              slug="tech"
+              posts={techPosts}
+            />
+          )}
+
+          {/* Startups */}
+          {startupPosts.length > 0 && (
+            <CategorySection
+              id="startups"
+              title="SAAS / Startups"
+              subtitle="FUNDING / GROWTH / OPERATOR LESSONS"
+              slug="startups"
+              posts={startupPosts}
+            />
+          )}
+
+          {/* X Threads */}
+          <Suspense fallback={null}>
+            <ThreadsSection posts={tweetPosts} />
+          </Suspense>
+
+          {/* Tools — static */}
+          <ToolsSection />
         </div>
-      </main>
-    </div>
-  );
+
+        {/* Sidebar */}
+        <Sidebar popularPosts={popularPosts} />
+      </div>
+    </Shell>
+  )
 }
