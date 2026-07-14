@@ -12,10 +12,17 @@ async function wpFetch<T>(
 ): Promise<{ data: T; headers: Headers }> {
   const url = `${WP_API_BASE}${path}`
 
+  const headers: Record<string, string> = {
+    'Content-Type': 'application/json',
+  }
+
+  // Allow bypassing Cloudflare bot/WAF checks using a secret token configured in Vercel env
+  if (process.env.WP_BYPASS_TOKEN) {
+    headers['X-FF-CMS-Bypass'] = process.env.WP_BYPASS_TOKEN
+  }
+
   const res = await fetch(url, {
-    headers: {
-      'Content-Type': 'application/json',
-    },
+    headers,
     next: options.next ?? { revalidate: 3600 },
     ...options,
   })
