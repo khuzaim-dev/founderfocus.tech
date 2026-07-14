@@ -6,7 +6,7 @@ import { SectionHead } from '@/components/shared/SectionHead'
 import { getTweetPosts } from '@/services/tweets'
 import { extractTweetId } from '@/lib/wordpress'
 
-const Tweet = dynamic(() => import('react-tweet').then((mod) => mod.Tweet))
+const Tweet = dynamic(() => import('react-tweet').then((mod) => mod.Tweet), { ssr: false })
 
 function TweetFallback() {
   return (

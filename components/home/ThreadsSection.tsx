@@ -6,8 +6,8 @@ import { SectionHead } from '@/components/shared/SectionHead'
 import { TweetCarousel } from '@/components/twitter/TweetCarousel'
 import { extractTweetId } from '@/lib/wordpress'
 
-// Dynamically import Tweet as a Server Component to code-split it
-const Tweet = dynamic(() => import('react-tweet').then((mod) => mod.Tweet))
+// Dynamically import Tweet as a Client Component with no SSR to bypass Twitter blocks on Vercel IPs
+const Tweet = dynamic(() => import('react-tweet').then((mod) => mod.Tweet), { ssr: false })
 
 function TweetFallback() {
   return (
