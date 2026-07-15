@@ -40,13 +40,26 @@ export default function SavedPage() {
       ) : (
         <div className="ff-article-grid" style={{ maxWidth: '1100px', margin: '0 auto', paddingTop: '32px' }}>
           {saved.map((item, i) => (
-            <article
+            <div
               key={item.slug}
-              className="ff-article-card"
               style={{
                 display: 'flex',
                 flexDirection: 'column',
-                flex: 1,
+                justifyContent: 'space-between',
+                padding: '24px',
+                border: '1px solid var(--line)',
+                borderRadius: '12px',
+                background: 'rgba(255, 255, 255, 0.78)',
+                transition: 'background 0.2s, box-shadow 0.2s',
+                boxShadow: '0 1px 0 rgba(0, 0, 0, 0.02)',
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.background = '#fff'
+                e.currentTarget.style.boxShadow = '0 10px 24px rgba(0, 0, 0, 0.07)'
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.background = 'rgba(255, 255, 255, 0.78)'
+                e.currentTarget.style.boxShadow = '0 1px 0 rgba(0, 0, 0, 0.02)'
               }}
             >
               <Link
@@ -54,50 +67,40 @@ export default function SavedPage() {
                 style={{
                   display: 'flex',
                   flexDirection: 'column',
-                  flex: 1,
+                  gap: '16px',
                   textDecoration: 'none',
                 }}
               >
-                <div style={{ padding: '24px 24px 16px', display: 'flex', flexDirection: 'column', flex: 1 }}>
-                  {/* Meta row */}
-                  <div
-                    style={{
-                      font: "10px 'DM Mono', monospace",
-                      color: '#696969',
-                      display: 'flex',
-                      justifyContent: 'space-between',
-                      marginTop: '18px',
-                      letterSpacing: '0.04em',
-                    }}
-                  >
-                    <span style={{ color: 'var(--blue)', fontWeight: 600, textTransform: 'uppercase' }}>
-                      {item.category}
-                    </span>
-                    <span>#{String(i + 1).padStart(2, '0')}</span>
-                  </div>
-
-                  {/* Title */}
-                  <h3
-                    style={{
-                      fontFamily: '"Geist Mono", monospace',
-                      fontSize: '19px',
-                      fontWeight: 500,
-                      lineHeight: 1.25,
-                      letterSpacing: '-0.02em',
-                      margin: '16px 0 10px',
-                      color: 'var(--ink)',
-                    }}
-                  >
-                    {item.title}
-                  </h3>
+                {/* Meta row */}
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                  <span style={{ font: "10px 'DM Mono', monospace", color: 'var(--blue)', fontWeight: 600, textTransform: 'uppercase' }}>
+                    {item.category}
+                  </span>
+                  <span style={{ font: "10px 'DM Mono', monospace", color: '#696969' }}>
+                    #{String(i + 1).padStart(2, '0')}
+                  </span>
                 </div>
+
+                {/* Title */}
+                <h3
+                  style={{
+                    fontFamily: '"Geist Mono", monospace',
+                    fontSize: '18px',
+                    fontWeight: 500,
+                    lineHeight: 1.3,
+                    letterSpacing: '-0.02em',
+                    margin: 0,
+                    color: 'var(--ink)',
+                  }}
+                >
+                  {item.title}
+                </h3>
               </Link>
 
               {/* Footer row with REMOVE button */}
               <div
                 style={{
-                  padding: '0 21px 21px',
-                  marginTop: 'auto',
+                  marginTop: '28px',
                   display: 'flex',
                   justifyContent: 'flex-end',
                 }}
