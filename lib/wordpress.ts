@@ -1,6 +1,7 @@
+import { notFound } from 'next/navigation'
 import type { WPPost, WPCategory, PaginatedPosts } from '@/types/wordpress'
 
-const WP_API_BASE = 'https://cms.founderfocus.tech/wp-json/wp/v2'
+const WP_API_BASE = process.env.NEXT_PUBLIC_WP_API_BASE || process.env.WP_API_BASE || 'https://cms.founderfocus.tech/wp-json/wp/v2'
 
 /**
  * Centralized fetch for WordPress REST API.
@@ -28,7 +29,8 @@ async function wpFetch<T>(
   })
 
   if (!res.ok) {
-    throw new Error(`WordPress API error: ${res.status} ${res.statusText} for ${url}`)
+    console.error(`WordPress API error: ${res.status} ${res.statusText} for ${url}`)
+    notFound()
   }
 
   const data: T = await res.json()

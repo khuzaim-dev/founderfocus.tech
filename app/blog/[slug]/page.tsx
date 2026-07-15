@@ -33,8 +33,8 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const post = await getPost(slug).catch(() => null)
   if (!post) return {}
 
-  const title = post.title.rendered.replace(/<[^>]*>/g, '')
-  const description = post.excerpt.rendered.replace(/<[^>]*>/g, '').slice(0, 160)
+  const title = post.title?.rendered?.replace(/<[^>]*>/g, '') || 'Untitled'
+  const description = post.excerpt?.rendered?.replace(/<[^>]*>/g, '').slice(0, 160) || ''
   const imageUrl = getFeaturedImageUrl(post)
 
   return {
@@ -71,11 +71,11 @@ export default async function BlogPostPage({ params }: PageProps) {
 
   if (!post) notFound()
 
-  const title = post.title.rendered.replace(/<[^>]*>/g, '')
+  const title = post.title?.rendered?.replace(/<[^>]*>/g, '') || 'Untitled'
   const imageUrl = getFeaturedImageUrl(post)
   const author = getAuthorName(post)
   const category = getPrimaryCategory(post)
-  const readingTime = formatReadingTime(calculateReadingTime(post.content.rendered))
+  const readingTime = formatReadingTime(calculateReadingTime(post.content?.rendered || ''))
   const date = formatShortDate(post.date)
   const articleJsonLd = buildArticleJsonLd(post, imageUrl ?? undefined)
   const breadcrumbJsonLd = buildBreadcrumbJsonLd([
@@ -139,7 +139,7 @@ export default async function BlogPostPage({ params }: PageProps) {
               fontWeight: 800,
               maxWidth: '780px',
             }}
-            dangerouslySetInnerHTML={{ __html: post.title.rendered }}
+            dangerouslySetInnerHTML={{ __html: post.title?.rendered || 'Untitled' }}
           />
 
           {/* Author + date */}
@@ -192,7 +192,7 @@ export default async function BlogPostPage({ params }: PageProps) {
           {/* Content */}
           <div
             className="ff-blog-content"
-            dangerouslySetInnerHTML={{ __html: post.content.rendered }}
+            dangerouslySetInnerHTML={{ __html: post.content?.rendered || '' }}
           />
 
           {/* Tags */}

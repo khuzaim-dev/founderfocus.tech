@@ -25,7 +25,7 @@ export function PopularPosts({ posts }: PopularPostsProps) {
         Popular today / 24h
       </h3>
       {posts.slice(0, 3).map((post, i) => {
-        const title = post.title.rendered.replace(/<[^>]*>/g, '')
+        const title = post.title?.rendered?.replace(/<[^>]*>/g, '') || 'Untitled'
         return (
           <Link key={post.id} href={`/blog/${post.slug}`}>
             <div

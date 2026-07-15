@@ -26,8 +26,8 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   if (!category) return {}
 
   return {
-    title: `${category.name} — FounderFocus`,
-    description: category.description || `Latest ${category.name} signals from FounderFocus.`,
+    title: `${category?.name || 'Category'} — FounderFocus`,
+    description: category?.description || `Latest ${category?.name || 'Category'} signals from FounderFocus.`,
     alternates: {
       canonical: `https://founderfocus.tech/category/${slug}`,
     },
@@ -52,9 +52,9 @@ export default async function CategoryPage({ params, searchParams }: PageProps) 
       <div className="ff-layout-grid">
         <div>
           <SectionHead
-            title={category.name}
-            subtitle={category.description?.toUpperCase() || `ALL ${category.name.toUpperCase()} SIGNALS`}
-            right={`${posts.length} signals`}
+            title={category?.name || 'Category'}
+            subtitle={category?.description?.toUpperCase() || `ALL ${category?.name?.toUpperCase() || 'CATEGORY'} SIGNALS`}
+            right={`${posts?.length || 0} signals`}
           />
           <ArticleGrid posts={posts} />
           <Pagination

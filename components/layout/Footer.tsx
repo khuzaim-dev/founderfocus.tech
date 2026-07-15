@@ -37,11 +37,9 @@ export function Footer({ categories }: FooterProps) {
         <div style={{ display: 'flex', gap: '17px', flexWrap: 'wrap' }}>
           {footerCategories.map((cat) => (
             <Link key={cat.id} href={`/category/${cat.slug}`}>
-              {cat.name.toUpperCase()}
+              {cat.name?.toUpperCase() || 'CATEGORY'}
             </Link>
           ))}
-          <Link href="/rss.xml">RSS</Link>
-          <Link href="/privacy">PRIVACY</Link>
         </div>
 
         <span>Built with ❤️ for the open web.</span>

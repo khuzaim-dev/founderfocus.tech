@@ -18,10 +18,10 @@ export function ArticleCard({ post }: ArticleCardProps) {
   const imageUrl = getFeaturedImageUrl(post)
   const author = getAuthorName(post)
   const category = getPrimaryCategory(post)
-  const readingTime = calculateReadingTime(post.content.rendered)
+  const readingTime = calculateReadingTime(post.content?.rendered || '')
   const relativeTime = formatRelativeTime(post.date)
-  const title = post.title.rendered.replace(/<[^>]*>/g, '')
-  const excerpt = post.excerpt.rendered.replace(/<[^>]*>/g, '').slice(0, 100)
+  const title = post.title?.rendered?.replace(/<[^>]*>/g, '') || 'Untitled'
+  const excerpt = post.excerpt?.rendered?.replace(/<[^>]*>/g, '').slice(0, 100) || ''
 
   return (
     <article className="ff-article-card">

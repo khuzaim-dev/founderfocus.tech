@@ -180,7 +180,7 @@ export function SearchModal({ open, onOpenChange }: SearchModalProps) {
                   color: 'var(--ink)',
                   lineHeight: 1.3,
                 }}
-                dangerouslySetInnerHTML={{ __html: post.title.rendered }}
+                dangerouslySetInnerHTML={{ __html: post.title?.rendered || 'Untitled' }}
               />
             </Link>
           ))}

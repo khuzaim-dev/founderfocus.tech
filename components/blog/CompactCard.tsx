@@ -11,7 +11,7 @@ interface CompactCardProps {
 export function CompactCard({ post, index }: CompactCardProps) {
   const imageUrl = getFeaturedImageUrl(post)
   const category = getPrimaryCategory(post)
-  const title = post.title.rendered.replace(/<[^>]*>/g, '')
+  const title = post.title?.rendered?.replace(/<[^>]*>/g, '') || 'Untitled'
 
   return (
     <Link href={`/blog/${post.slug}`}>

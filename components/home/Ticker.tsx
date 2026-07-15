@@ -54,7 +54,7 @@ export function Ticker({ posts }: TickerProps) {
         >
           {/* Duplicate for seamless loop */}
           {[...items, ...items].map((post, i) => {
-            const title = post.title.rendered.replace(/<[^>]*>/g, '')
+            const title = post.title?.rendered?.replace(/<[^>]*>/g, '') || 'Untitled'
             return (
               <Link
                 key={`${post.id}-${i}`}

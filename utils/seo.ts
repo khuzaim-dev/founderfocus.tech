@@ -12,8 +12,8 @@ export function buildArticleJsonLd(post: WPPost, imageUrl?: string) {
   return {
     '@context': 'https://schema.org',
     '@type': 'Article',
-    headline: post.title.rendered.replace(/<[^>]*>/g, ''),
-    description: post.excerpt.rendered.replace(/<[^>]*>/g, '').trim(),
+    headline: post.title?.rendered?.replace(/<[^>]*>/g, '') || 'Untitled',
+    description: post.excerpt?.rendered?.replace(/<[^>]*>/g, '').trim() || '',
     image: imageUrl ? [imageUrl] : undefined,
     datePublished: post.date_gmt,
     dateModified: post.modified_gmt,
