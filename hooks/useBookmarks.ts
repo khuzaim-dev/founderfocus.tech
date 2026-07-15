@@ -6,6 +6,7 @@ interface BookmarkMeta {
   slug: string
   category: string
   savedAt: string
+  imageUrl?: string | null
 }
 
 interface BookmarksStore {

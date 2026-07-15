@@ -1,8 +1,8 @@
 // Static AI Releases list — owner: "don't do anything here still"
 const AI_RELEASES = [
-  { model: 'GPT-5.2', company: 'OPENAI' },
-  { model: 'Claude 4.2', company: 'ANTHROPIC' },
-  { model: 'Gemini 3 Pro', company: 'GOOGLE' },
+  { model: 'GPT-5.6', company: 'OPENAI' },
+  { model: 'Claude Opus 4.8', company: 'ANTHROPIC' },
+  { model: 'Gemini 3.5', company: 'GOOGLE' },
   { model: 'Grok 4.5', company: 'X AI' },
 ]
 

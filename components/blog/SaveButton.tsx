@@ -5,9 +5,10 @@ interface SaveButtonProps {
   slug: string
   title: string
   category: string
+  imageUrl?: string | null
 }
 
-export function SaveButton({ slug, title, category }: SaveButtonProps) {
+export function SaveButton({ slug, title, category, imageUrl }: SaveButtonProps) {
   const { save, remove, isSaved } = useBookmarks()
   const saved = isSaved(slug)
 
@@ -17,7 +18,7 @@ export function SaveButton({ slug, title, category }: SaveButtonProps) {
         if (saved) {
           remove(slug)
         } else {
-          save(slug, { slug, title, category })
+          save(slug, { slug, title, category, imageUrl })
         }
       }}
       aria-label={saved ? 'Remove bookmark' : 'Save article'}

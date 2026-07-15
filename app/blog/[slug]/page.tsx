@@ -168,7 +168,7 @@ export default async function BlogPostPage({ params, searchParams }: PageProps) 
             <span>·</span>
             <span>{readingTime}</span>
             <div style={{ marginLeft: 'auto' }}>
-              <SaveButton slug={post.slug} title={title} category={category} />
+              <SaveButton slug={post.slug} title={title} category={category} imageUrl={imageUrl} />
             </div>
           </div>
 

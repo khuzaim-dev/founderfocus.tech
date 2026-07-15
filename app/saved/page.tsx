@@ -1,5 +1,6 @@
 'use client'
 import Link from 'next/link'
+import Image from 'next/image'
 import { Shell } from '@/components/layout/Shell'
 import { SectionHead } from '@/components/shared/SectionHead'
 import { useBookmarks } from '@/hooks/useBookmarks'
@@ -82,6 +83,17 @@ export default function SavedPage() {
                   textDecoration: 'none',
                 }}
               >
+                {item.imageUrl && (
+                  <div style={{ width: '100%', height: '140px', marginBottom: '8px', overflow: 'hidden', borderRadius: '6px' }}>
+                    <Image
+                      src={item.imageUrl}
+                      alt={item.title}
+                      width={400}
+                      height={140}
+                      style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                    />
+                  </div>
+                )}
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                   <b
                     style={{
