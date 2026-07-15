@@ -58,55 +58,7 @@ export default function SavedPage() {
                   textDecoration: 'none',
                 }}
               >
-                {/* Cover image */}
-                {item.imageUrl ? (
-                  <div
-                    style={{
-                      width: '100%',
-                      height: '132px',
-                      overflow: 'hidden',
-                      borderBottom: '1px solid var(--line)',
-                      flexShrink: 0,
-                    }}
-                  >
-                    <Image
-                      src={item.imageUrl}
-                      alt={item.title}
-                      width={600}
-                      height={132}
-                      style={{
-                        width: '100%',
-                        height: '132px',
-                        objectFit: 'cover',
-                        filter: 'saturate(.72) contrast(1.05)',
-                        transition: 'filter .25s, transform .25s',
-                      }}
-                      className="article-cover"
-                    />
-                  </div>
-                ) : (
-                  /* Editorial Placeholder matching site grid background */
-                  <div
-                    style={{
-                      width: '100%',
-                      height: '132px',
-                      background: 'var(--paper)',
-                      backgroundImage: 'linear-gradient(var(--grid) 1px, transparent 1px), linear-gradient(90deg, var(--grid) 1px, transparent 1px)',
-                      backgroundSize: '20px 20px',
-                      borderBottom: '1px solid var(--line)',
-                      flexShrink: 0,
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                    }}
-                  >
-                    <span style={{ font: "9px 'DM Mono', monospace", color: 'var(--muted)', letterSpacing: '0.05em', border: '1px solid var(--line)', padding: '3px 8px', background: 'var(--paper)', borderRadius: '2px' }}>
-                      NO IMAGE
-                    </span>
-                  </div>
-                )}
-
-                <div style={{ padding: '0 21px 21px', display: 'flex', flexDirection: 'column', flex: 1 }}>
+                <div style={{ padding: '24px 24px 16px', display: 'flex', flexDirection: 'column', flex: 1 }}>
                   {/* Meta row */}
                   <div
                     style={{
