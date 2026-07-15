@@ -132,7 +132,7 @@ export default function SavedPage() {
                   REMOVE
                 </button>
               </div>
-            </article>
+            </div>
           ))}
         </div>
       )}
