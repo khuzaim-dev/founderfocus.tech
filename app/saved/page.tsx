@@ -38,36 +38,15 @@ export default function SavedPage() {
           </Link>
         </div>
       ) : (
-        <div
-          style={{
-            display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fill, minmax(320px, 1fr))',
-            gap: '24px',
-            maxWidth: '1100px',
-            margin: '0 auto',
-            paddingTop: '32px'
-          }}
-        >
+        <div className="ff-article-grid" style={{ maxWidth: '1100px', margin: '0 auto', paddingTop: '32px' }}>
           {saved.map((item, i) => (
-            <div
+            <article
               key={item.slug}
-              className="ff-saved-card"
+              className="ff-article-card"
               style={{
                 display: 'flex',
                 flexDirection: 'column',
-                justifyContent: 'space-between',
-                padding: '24px',
-                border: '1px solid #eaeaea',
-                borderRadius: '8px',
-                background: '#ffffff',
-                boxShadow: '0 2px 8px rgba(0,0,0,0.02)',
-                transition: 'box-shadow 0.2s',
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.boxShadow = '0 6px 16px rgba(0,0,0,0.06)'
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.boxShadow = '0 2px 8px rgba(0,0,0,0.02)'
+                flex: 1,
               }}
             >
               <Link
@@ -75,71 +54,111 @@ export default function SavedPage() {
                 style={{
                   display: 'flex',
                   flexDirection: 'column',
-                  gap: '20px',
                   flex: 1,
                   textDecoration: 'none',
                 }}
               >
-                {item.imageUrl && (
-                  <div style={{ width: '100%', height: '140px', overflow: 'hidden', borderRadius: '4px' }}>
+                {/* Cover image */}
+                {item.imageUrl ? (
+                  <div
+                    style={{
+                      width: '100%',
+                      height: '132px',
+                      overflow: 'hidden',
+                      borderBottom: '1px solid var(--line)',
+                      flexShrink: 0,
+                    }}
+                  >
                     <Image
                       src={item.imageUrl}
                       alt={item.title}
-                      width={400}
-                      height={140}
-                      style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                      width={600}
+                      height={132}
+                      style={{
+                        width: '100%',
+                        height: '132px',
+                        objectFit: 'cover',
+                        filter: 'saturate(.72) contrast(1.05)',
+                        transition: 'filter .25s, transform .25s',
+                      }}
+                      className="article-cover"
                     />
                   </div>
-                )}
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                  <b
+                ) : (
+                  /* Editorial Placeholder when image doesn't exist */
+                  <div
                     style={{
-                      font: "12px 'DM Mono', monospace",
-                      color: '#3b82f6',
+                      width: '100%',
+                      height: '132px',
+                      background: 'linear-gradient(135deg, #f0f2f5 0%, #e2e8f0 100%)',
+                      borderBottom: '1px solid var(--line)',
+                      flexShrink: 0,
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
                     }}
                   >
-                    {String(i + 1).padStart(2, '0')}
-                  </b>
+                    <span style={{ font: "10px 'DM Mono', monospace", color: 'var(--muted)' }}>
+                      [ NO COVER IMAGE ]
+                    </span>
+                  </div>
+                )}
+
+                <div style={{ padding: '0 21px 21px', display: 'flex', flexDirection: 'column', flex: 1 }}>
+                  {/* Meta row */}
                   <div
                     style={{
                       font: "10px 'DM Mono', monospace",
-                      color: '#3b82f6',
-                      background: '#eff6ff',
-                      padding: '4px 8px',
-                      borderRadius: '4px',
-                      textTransform: 'uppercase'
+                      color: '#696969',
+                      display: 'flex',
+                      justifyContent: 'space-between',
+                      marginTop: '18px',
+                      letterSpacing: '0.04em',
                     }}
                   >
-                    {item.category}
+                    <span style={{ color: 'var(--blue)', fontWeight: 600, textTransform: 'uppercase' }}>
+                      {item.category}
+                    </span>
+                    <span>#{String(i + 1).padStart(2, '0')}</span>
                   </div>
+
+                  {/* Title */}
+                  <h3
+                    style={{
+                      fontFamily: '"Geist Mono", monospace',
+                      fontSize: '19px',
+                      fontWeight: 500,
+                      lineHeight: 1.25,
+                      letterSpacing: '-0.02em',
+                      margin: '16px 0 10px',
+                      color: 'var(--ink)',
+                    }}
+                  >
+                    {item.title}
+                  </h3>
                 </div>
-                <h3
-                  style={{
-                    fontFamily: '"Geist Mono", monospace',
-                    fontSize: '19px',
-                    fontWeight: 600,
-                    margin: 0,
-                    letterSpacing: '-0.3px',
-                    lineHeight: 1.4,
-                    color: '#111827',
-                  }}
-                >
-                  {item.title}
-                </h3>
               </Link>
 
-              <div style={{ marginTop: '28px', paddingTop: '16px', borderTop: '1px solid #eaeaea', display: 'flex', justifyContent: 'flex-end' }}>
+              {/* Footer row with REMOVE button */}
+              <div
+                style={{
+                  padding: '0 21px 21px',
+                  marginTop: 'auto',
+                  display: 'flex',
+                  justifyContent: 'flex-end',
+                }}
+              >
                 <button
                   onClick={() => remove(item.slug)}
                   aria-label={`Remove ${item.title} from saved`}
                   style={{
-                    background: '#ffffff',
-                    border: '1px solid #eaeaea',
-                    color: '#e5e7eb',
+                    background: 'transparent',
+                    border: '1px solid var(--line)',
+                    color: 'var(--muted)',
                     font: "10px 'DM Mono', monospace",
                     padding: '6px 12px',
                     cursor: 'pointer',
-                    borderRadius: '6px',
+                    borderRadius: '4px',
                     transition: 'all 0.2s',
                   }}
                   onMouseEnter={(e) => {
@@ -148,15 +167,15 @@ export default function SavedPage() {
                     e.currentTarget.style.background = '#fef2f2'
                   }}
                   onMouseLeave={(e) => {
-                    e.currentTarget.style.color = '#e5e7eb'
-                    e.currentTarget.style.borderColor = '#eaeaea'
-                    e.currentTarget.style.background = '#ffffff'
+                    e.currentTarget.style.color = 'var(--muted)'
+                    e.currentTarget.style.borderColor = 'var(--line)'
+                    e.currentTarget.style.background = 'transparent'
                   }}
                 >
                   REMOVE
                 </button>
               </div>
-            </div>
+            </article>
           ))}
         </div>
       )}
