@@ -1,6 +1,5 @@
 'use client'
 import Link from 'next/link'
-import Image from 'next/image'
 import { Shell } from '@/components/layout/Shell'
 import { SectionHead } from '@/components/shared/SectionHead'
 import { useBookmarks } from '@/hooks/useBookmarks'
@@ -39,12 +38,12 @@ export default function SavedPage() {
           </Link>
         </div>
       ) : (
-        <div 
-          style={{ 
-            display: 'grid', 
-            gridTemplateColumns: 'repeat(auto-fill, minmax(320px, 1fr))', 
-            gap: '24px', 
-            maxWidth: '1100px', 
+        <div
+          style={{
+            display: 'grid',
+            gridTemplateColumns: 'repeat(auto-fill, minmax(320px, 1fr))',
+            gap: '24px',
+            maxWidth: '1100px',
             margin: '0 auto',
             paddingTop: '32px'
           }}
@@ -58,19 +57,17 @@ export default function SavedPage() {
                 flexDirection: 'column',
                 justifyContent: 'space-between',
                 padding: '24px',
-                border: '1px solid var(--line)',
-                borderRadius: '12px',
-                background: '#fafafa',
-                boxShadow: '0 4px 12px rgba(0,0,0,0.03)',
-                transition: 'transform 0.2s, box-shadow 0.2s',
+                border: '1px solid #eaeaea',
+                borderRadius: '8px',
+                background: '#ffffff',
+                boxShadow: '0 2px 8px rgba(0,0,0,0.02)',
+                transition: 'box-shadow 0.2s',
               }}
               onMouseEnter={(e) => {
-                e.currentTarget.style.transform = 'translateY(-2px)'
-                e.currentTarget.style.boxShadow = '0 8px 24px rgba(0,0,0,0.06)'
+                e.currentTarget.style.boxShadow = '0 6px 16px rgba(0,0,0,0.06)'
               }}
               onMouseLeave={(e) => {
-                e.currentTarget.style.transform = 'none'
-                e.currentTarget.style.boxShadow = '0 4px 12px rgba(0,0,0,0.03)'
+                e.currentTarget.style.boxShadow = '0 2px 8px rgba(0,0,0,0.02)'
               }}
             >
               <Link
@@ -78,13 +75,13 @@ export default function SavedPage() {
                 style={{
                   display: 'flex',
                   flexDirection: 'column',
-                  gap: '12px',
+                  gap: '20px',
                   flex: 1,
                   textDecoration: 'none',
                 }}
               >
                 {item.imageUrl && (
-                  <div style={{ width: '100%', height: '140px', marginBottom: '8px', overflow: 'hidden', borderRadius: '6px' }}>
+                  <div style={{ width: '100%', height: '140px', overflow: 'hidden', borderRadius: '4px' }}>
                     <Image
                       src={item.imageUrl}
                       alt={item.title}
@@ -97,8 +94,8 @@ export default function SavedPage() {
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                   <b
                     style={{
-                      font: "11px 'DM Mono', monospace",
-                      color: 'var(--blue)',
+                      font: "12px 'DM Mono', monospace",
+                      color: '#3b82f6',
                     }}
                   >
                     {String(i + 1).padStart(2, '0')}
@@ -106,8 +103,8 @@ export default function SavedPage() {
                   <div
                     style={{
                       font: "10px 'DM Mono', monospace",
-                      color: 'var(--blue)',
-                      background: 'rgba(0, 102, 255, 0.08)',
+                      color: '#3b82f6',
+                      background: '#eff6ff',
                       padding: '4px 8px',
                       borderRadius: '4px',
                       textTransform: 'uppercase'
@@ -119,41 +116,41 @@ export default function SavedPage() {
                 <h3
                   style={{
                     fontFamily: '"Geist Mono", monospace',
-                    fontSize: '18px',
+                    fontSize: '19px',
                     fontWeight: 600,
                     margin: 0,
-                    letterSpacing: '-0.4px',
+                    letterSpacing: '-0.3px',
                     lineHeight: 1.4,
-                    color: 'var(--ink)',
+                    color: '#111827',
                   }}
                 >
                   {item.title}
                 </h3>
               </Link>
-              
-              <div style={{ marginTop: '24px', paddingTop: '16px', borderTop: '1px solid var(--line)', display: 'flex', justifyContent: 'flex-end' }}>
+
+              <div style={{ marginTop: '28px', paddingTop: '16px', borderTop: '1px solid #eaeaea', display: 'flex', justifyContent: 'flex-end' }}>
                 <button
                   onClick={() => remove(item.slug)}
                   aria-label={`Remove ${item.title} from saved`}
                   style={{
-                    background: 'transparent',
-                    border: '1px solid var(--line)',
-                    color: 'var(--muted)',
+                    background: '#ffffff',
+                    border: '1px solid #eaeaea',
+                    color: '#e5e7eb',
                     font: "10px 'DM Mono', monospace",
                     padding: '6px 12px',
                     cursor: 'pointer',
                     borderRadius: '6px',
-                    transition: 'color 0.2s, border-color 0.2s, background 0.2s',
+                    transition: 'all 0.2s',
                   }}
                   onMouseEnter={(e) => {
-                    e.currentTarget.style.color = '#e53e3e'
-                    e.currentTarget.style.borderColor = '#e53e3e'
-                    e.currentTarget.style.background = 'rgba(229, 62, 62, 0.05)'
+                    e.currentTarget.style.color = '#ef4444'
+                    e.currentTarget.style.borderColor = '#ef4444'
+                    e.currentTarget.style.background = '#fef2f2'
                   }}
                   onMouseLeave={(e) => {
-                    e.currentTarget.style.color = 'var(--muted)'
-                    e.currentTarget.style.borderColor = 'var(--line)'
-                    e.currentTarget.style.background = 'transparent'
+                    e.currentTarget.style.color = '#e5e7eb'
+                    e.currentTarget.style.borderColor = '#eaeaea'
+                    e.currentTarget.style.background = '#ffffff'
                   }}
                 >
                   REMOVE
