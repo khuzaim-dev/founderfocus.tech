@@ -85,12 +85,14 @@ export default function SavedPage() {
                     />
                   </div>
                 ) : (
-                  /* Editorial Placeholder when image doesn't exist */
+                  /* Editorial Placeholder matching site grid background */
                   <div
                     style={{
                       width: '100%',
                       height: '132px',
-                      background: 'linear-gradient(135deg, #f0f2f5 0%, #e2e8f0 100%)',
+                      background: 'var(--paper)',
+                      backgroundImage: 'linear-gradient(var(--grid) 1px, transparent 1px), linear-gradient(90deg, var(--grid) 1px, transparent 1px)',
+                      backgroundSize: '20px 20px',
                       borderBottom: '1px solid var(--line)',
                       flexShrink: 0,
                       display: 'flex',
@@ -98,8 +100,8 @@ export default function SavedPage() {
                       justifyContent: 'center',
                     }}
                   >
-                    <span style={{ font: "10px 'DM Mono', monospace", color: 'var(--muted)' }}>
-                      [ NO COVER IMAGE ]
+                    <span style={{ font: "9px 'DM Mono', monospace", color: 'var(--muted)', letterSpacing: '0.05em', border: '1px solid var(--line)', padding: '3px 8px', background: 'var(--paper)', borderRadius: '2px' }}>
+                      NO IMAGE
                     </span>
                   </div>
                 )}
@@ -154,7 +156,7 @@ export default function SavedPage() {
                   style={{
                     background: 'transparent',
                     border: '1px solid var(--line)',
-                    color: 'var(--muted)',
+                    color: 'var(--ink)',
                     font: "10px 'DM Mono', monospace",
                     padding: '6px 12px',
                     cursor: 'pointer',
@@ -167,7 +169,7 @@ export default function SavedPage() {
                     e.currentTarget.style.background = '#fef2f2'
                   }}
                   onMouseLeave={(e) => {
-                    e.currentTarget.style.color = 'var(--muted)'
+                    e.currentTarget.style.color = 'var(--ink)'
                     e.currentTarget.style.borderColor = 'var(--line)'
                     e.currentTarget.style.background = 'transparent'
                   }}
