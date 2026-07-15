@@ -3,7 +3,7 @@ const AI_RELEASES = [
   { model: 'GPT-5.6', company: 'OPENAI' },
   { model: 'Claude Opus 4.8', company: 'ANTHROPIC' },
   { model: 'Gemini 3.5', company: 'GOOGLE' },
-  { model: 'Grok 4.5', company: 'X AI' },
+  { model: 'Grok 4.5', company: 'x-AI' },
 ]
 
 export function AIReleases() {
@@ -34,10 +34,11 @@ export function AIReleases() {
               borderTop: '1px solid var(--line)',
               display: 'flex',
               justifyContent: 'space-between',
+              color: 'var(--ink)',
             }}
           >
             <span>{item.model}</span>
-            <span style={{ color: 'var(--muted)' }}>{item.company}</span>
+            <span style={{ color: 'var(--ink)' }}>{item.company}</span>
           </div>
         ))}
       </div>
