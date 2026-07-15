@@ -21,6 +21,7 @@ export const revalidate = 3600
 
 interface PageProps {
   params: Promise<{ slug: string }>
+  searchParams: Promise<{ from?: string }>
 }
 
 export async function generateStaticParams() {
@@ -62,8 +63,9 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   }
 }
 
-export default async function BlogPostPage({ params }: PageProps) {
+export default async function BlogPostPage({ params, searchParams }: PageProps) {
   const { slug } = await params
+  const { from } = await searchParams
   const [post, popularPosts] = await Promise.all([
     getPost(slug).catch(() => null),
     getLatestPosts(3).catch(() => []),
@@ -84,6 +86,9 @@ export default async function BlogPostPage({ params }: PageProps) {
     { name: title, url: `https://founderfocus.tech/blog/${slug}` },
   ])
 
+  const backHref = from === 'saved' ? '/saved' : '/'
+  const backText = from === 'saved' ? '← Back to Saved' : '← Back to Signals'
+
   return (
     <Shell as="main" style={{ paddingTop: '48px', paddingBottom: '80px' }}>
       {/* JSON-LD */}
@@ -101,7 +106,7 @@ export default async function BlogPostPage({ params }: PageProps) {
         <article>
           {/* Back */}
           <Link
-            href="/"
+            href={backHref}
             style={{
               font: "12px 'DM Mono', monospace",
               color: '#696969',
@@ -111,7 +116,7 @@ export default async function BlogPostPage({ params }: PageProps) {
               marginBottom: '28px',
             }}
           >
-            ← Back to Signals
+            {backText}
           </Link>
 
           {/* Category + reading time */}
